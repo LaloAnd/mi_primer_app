@@ -1,0 +1,53 @@
+[
+  {
+    "id": "ses-001",
+    "nombreEjercicio": "Press de banca plano",
+    "musculoObjetivo": "Pecho",
+    "serieObjetivo": {
+      "repeticiones": 10,
+      "pesoKg": 70.0,
+      "tiempoDescansoSegundos": 90
+    },
+    "creadoEn": "2026-08-14T14:00:00Z",
+    "estado": {
+      "tipo": "completada",
+      "completadoEn": "2026-08-14T14:45:00Z",
+      "esfuerzoPercibido": 8
+    },
+    "notas": [
+      "Mantener codos a 45 grados",
+      "Subir peso en la próxima sesión"
+    ]
+  },
+  {
+    "id": "ses-002",
+    "nombreEjercicio": "Sentadilla libre",
+    "musculoObjetivo": "Cuádriceps",
+    "serieObjetivo": {
+      "repeticiones": 8,
+      "pesoKg": 100.0,
+      "tiempoDescansoSegundos": 120
+    },
+    "creadoEn": "2026-08-15T13:30:00Z",
+    "estado": {
+      "tipo": "en_progreso",
+      "iniciadoEn": "2026-08-15T13:35:00Z"
+    }
+  },
+  {
+    "id": "ses-003",
+    "nombreEjercicio": "Dominadas pronas",
+    "musculoObjetivo": "Espalda",
+    "serieObjetivo": {
+      "repeticiones": 12,
+      "pesoKg": 0.0,
+      "tiempoDescansoSegundos": 60
+    },
+    "creadoEn": "2026-08-16T18:10:00Z",
+    "estado": {
+      "tipo": "planificada",
+      "ordenEnRutina": 1
+    },
+    "notas": []
+  }
+]
