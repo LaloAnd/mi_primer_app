@@ -1,26 +1,26 @@
-# mi_primer_app
+# Mi Primer App : Registro de Entrenamientos
 
-A new Flutter project.
+Aplicación en Flutter para el registro, seguimiento y validación de sesiones de entrenamiento físico y series de ejercicio localmente.
 
-## Getting Started
+## El dominio
 
-This project is a starting point for a Flutter application.
+- SesionEjercicio : Entidad principal. Identidad: id.
+- Serie : Objeto de valor (repeticiones y peso).
+- EstadoSesion : Clase sellada (sealed class): Planificada, EnProgreso, Completada.
 
-A few resources to get you started if this is your first Flutter project:
+Decision: Se utilizó freezed para garantizar inmutabilidad, copyWith y comparación por valor en el dominio, combinandolo con des-serialización manual basada en adaptadores defensivos (leerTexto, leerFecha, etc.) para lanzar excepciones CampoInvalido ante JSONs malformados.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Cómo correr el proyecto
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Clonar el repositorio:
+   git clone <https://github.com/LaloAnd/mi_primer_app.git> , cd mi_primer_app
+- Instalar dependencias:
+flutter pub get
+- Generar codigo de Freezed:
+dart run build_runner build --delete-conflicting-outputs
+- Ejecutar las pruebas unitarias y de widgets:
+flutter test
+- Ejecutar la aplicacion:
+flutter run
 ### Flutter Doctor Captura de pantalla
 <img width="1197" height="413" alt="image" src="https://github.com/user-attachments/assets/4aeed62e-912e-4998-a37a-cf8dafdc9fcf" />
-Decisión de modelado (Paso 11):
-
-Se optó por una estrategia híbrida: utilizar Freezed para la generación automática de inmutabilidad, copyWith, ==, hashCode y toString, manteniendo fromJson y toJson escritos a mano.
-
-Ganancia: Nos liberamos de escribir más de 100 líneas de código repetitivo de comparación e inmutabilidad, garantizando comparaciones profundas en colecciones (List<String> notas).
-
-Control: Conservamos los validadores manuales que lanzan exepciones explícitas CampoInvalido al parsear JSON, garantizando mensajes de error legibles y diagnósticos precisos ante datos corruptos.
