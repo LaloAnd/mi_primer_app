@@ -68,19 +68,27 @@ void main() {
       expect(pendientes.first.id, 'ses-001');
     });
 
-    test('un archivo que no es una lista en la raíz se rechaza con CampoInvalido', () async {
-      final repo = EntrenamientosLocales(lector: (_) async => '{"id": "ses-001"}');
+    test(
+      'un archivo que no es una lista en la raíz se rechaza con CampoInvalido',
+      () async {
+        final repo = EntrenamientosLocales(
+          lector: (_) async => '{"id": "ses-001"}',
+        );
 
-      expect(repo.obtenerTodos(), throwsA(isA<CampoInvalido>()));
-    });
+        expect(repo.obtenerTodos(), throwsA(isA<CampoInvalido>()));
+      },
+    );
 
-    test('el asset declarado en pubspec existe y el modelo lo decodifica correctamente', () async {
-      TestWidgetsFlutterBinding.ensureInitialized();
+    test(
+      'el asset declarado en pubspec existe y el modelo lo decodifica correctamente',
+      () async {
+        TestWidgetsFlutterBinding.ensureInitialized();
 
-      final repo = EntrenamientosLocales(lector: rootBundle.loadString);
-      final sesiones = await repo.obtenerTodos();
+        final repo = EntrenamientosLocales(lector: rootBundle.loadString);
+        final sesiones = await repo.obtenerTodos();
 
-      expect(sesiones.length, greaterThanOrEqualTo(3));
-    });
+        expect(sesiones.length, greaterThanOrEqualTo(3));
+      },
+    );
   });
 }

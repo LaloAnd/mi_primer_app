@@ -10,25 +10,28 @@ class Serie {
     required this.repeticiones,
     required this.pesoKg,
     required this.tiempoDescansoSegundos,
-  })  : assert(repeticiones > 0, 'Las repeticiones deben ser mayores a 0'),
-        assert(pesoKg >= 0, 'El peso no puede ser negativo'),
-        assert(tiempoDescansoSegundos >= 0, 'El tiempo de descanso no puede ser negativo');
+  }) : assert(repeticiones > 0, 'Las repeticiones deben ser mayores a 0'),
+       assert(pesoKg >= 0, 'El peso no puede ser negativo'),
+       assert(
+         tiempoDescansoSegundos >= 0,
+         'El tiempo de descanso no puede ser negativo',
+       );
 
   factory Serie.fromJson(Map<String, dynamic> json) => Serie(
-        repeticiones: leerEntero(json, 'repeticiones'),
-        pesoKg: leerDecimal(json, 'pesoKg'),
-        tiempoDescansoSegundos: leerEntero(json, 'tiempoDescansoSegundos'),
-      );
+    repeticiones: leerEntero(json, 'repeticiones'),
+    pesoKg: leerDecimal(json, 'pesoKg'),
+    tiempoDescansoSegundos: leerEntero(json, 'tiempoDescansoSegundos'),
+  );
 
   final int repeticiones;
   final double pesoKg;
   final int tiempoDescansoSegundos;
 
   Map<String, dynamic> toJson() => {
-        'repeticiones': repeticiones,
-        'pesoKg': pesoKg,
-        'tiempoDescansoSegundos': tiempoDescansoSegundos,
-      };
+    'repeticiones': repeticiones,
+    'pesoKg': pesoKg,
+    'tiempoDescansoSegundos': tiempoDescansoSegundos,
+  };
 
   @override
   bool operator ==(Object other) =>

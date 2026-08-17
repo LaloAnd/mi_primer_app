@@ -7,7 +7,8 @@ import 'package:mi_primer_app/features/entrenamientos/domain/serie.dart';
 import 'package:mi_primer_app/features/entrenamientos/domain/sesion_ejercicio.dart';
 
 /// Fabrica de sesiones de prueba para reutilizar en los tests.
-SesionEjercicio ejemplo({EstadoSesion? estado, List<String>? notas}) => SesionEjercicio(
+SesionEjercicio ejemplo({EstadoSesion? estado, List<String>? notas}) =>
+    SesionEjercicio(
       id: 'ses-001',
       nombreEjercicio: 'Press de banca plano',
       musculoObjetivo: 'Pecho',
@@ -25,16 +26,15 @@ void main() {
   group('serialización', () {
     test('una sesión sobrevive la ida y vuelta a JSON sin perder nada', () {
       final original = ejemplo(
-        estado: Completada(
-          DateTime.utc(2026, 8, 14, 14, 45),
-          8,
-        ),
+        estado: Completada(DateTime.utc(2026, 8, 14, 14, 45), 8),
         notas: const ['Mantener codos a 45 grados'],
       );
 
       // Pasa por String -> JSON -> Objeto para validar todo el flujo
       final texto = jsonEncode(original.toJson());
-      final vuelta = SesionEjercicio.fromJson(jsonDecode(texto) as Map<String, dynamic>);
+      final vuelta = SesionEjercicio.fromJson(
+        jsonDecode(texto) as Map<String, dynamic>,
+      );
 
       expect(vuelta, equals(original));
     });
@@ -44,20 +44,30 @@ void main() {
       expect(SesionEjercicio.fromJson(json).notas, isEmpty);
     });
 
-    test('una sesión sin nombreEjercicio dice QUÉ campo falló, no solo que falló', () {
-      final json = ejemplo().toJson()..remove('nombreEjercicio');
+    test(
+      'una sesión sin nombreEjercicio dice QUÉ campo falló, no solo que falló',
+      () {
+        final json = ejemplo().toJson()..remove('nombreEjercicio');
 
-      expect(
-        () => SesionEjercicio.fromJson(json),
-        throwsA(
-          isA<CampoInvalido>().having((e) => e.campo, 'campo', 'nombreEjercicio'),
-        ),
-      );
-    });
+        expect(
+          () => SesionEjercicio.fromJson(json),
+          throwsA(
+            isA<CampoInvalido>().having(
+              (e) => e.campo,
+              'campo',
+              'nombreEjercicio',
+            ),
+          ),
+        );
+      },
+    );
 
     test('una fecha que no es ISO 8601 se rechaza con CampoInvalido', () {
       final json = ejemplo().toJson()..['creadoEn'] = '14 de agosto de 2026';
-      expect(() => SesionEjercicio.fromJson(json), throwsA(isA<CampoInvalido>()));
+      expect(
+        () => SesionEjercicio.fromJson(json),
+        throwsA(isA<CampoInvalido>()),
+      );
     });
 
     test('la fecha de creación se conserva en UTC y termina en Z', () {
@@ -71,10 +81,13 @@ void main() {
       expect(ejemplo(), equals(ejemplo()));
     });
 
-    test('dos sesiones con los mismos datos comparten hashCode y funcionan en Set', () {
-      expect(ejemplo().hashCode, equals(ejemplo().hashCode));
-      expect({ejemplo(), ejemplo()}.length, 1);
-    });
+    test(
+      'dos sesiones con los mismos datos comparten hashCode y funcionan en Set',
+      () {
+        expect(ejemplo().hashCode, equals(ejemplo().hashCode));
+        expect({ejemplo(), ejemplo()}.length, 1);
+      },
+    );
 
     test('dos sesiones con notas distintas NO son iguales', () {
       expect(
@@ -83,14 +96,17 @@ void main() {
       );
     });
 
-    test('copyWith cambia solo lo que se le pasa conservando la identidad id y creadoEn', () {
-      final original = ejemplo();
-      final copia = original.copyWith(nombreEjercicio: 'Sentadilla libre');
+    test(
+      'copyWith cambia solo lo que se le pasa conservando la identidad id y creadoEn',
+      () {
+        final original = ejemplo();
+        final copia = original.copyWith(nombreEjercicio: 'Sentadilla libre');
 
-      expect(copia.nombreEjercicio, 'Sentadilla libre');
-      expect(copia.id, original.id);
-      expect(copia.creadoEn, original.creadoEn);
-    });
+        expect(copia.nombreEjercicio, 'Sentadilla libre');
+        expect(copia.id, original.id);
+        expect(copia.creadoEn, original.creadoEn);
+      },
+    );
   });
 
   group('reglas de negocio', () {
@@ -110,9 +126,12 @@ void main() {
       expect(ejemplo().estaObsoleta(ahora), isTrue);
     });
 
-    test('la etiqueta de una sesión completada incluye el nivel de esfuerzo', () {
-      final estado = Completada(DateTime.utc(2026, 8, 14, 14, 45), 8);
-      expect(estado.etiqueta, contains('8/10'));
-    });
+    test(
+      'la etiqueta de una sesión completada incluye el nivel de esfuerzo',
+      () {
+        final estado = Completada(DateTime.utc(2026, 8, 14, 14, 45), 8);
+        expect(estado.etiqueta, contains('8/10'));
+      },
+    );
   });
 }

@@ -9,8 +9,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mi_primer_app/main.dart';
 
 void main() {
-  testWidgets('MiApp se construye correctamente sin lanzar excepciones',
-      (WidgetTester tester) async {
+  testWidgets('MiApp se construye correctamente sin lanzar excepciones', (
+    WidgetTester tester,
+  ) async {
     // Construye la aplicación y dispara un frame.
     await tester.pumpWidget(const MiApp());
 

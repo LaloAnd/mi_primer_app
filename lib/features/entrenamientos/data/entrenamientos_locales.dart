@@ -28,7 +28,11 @@ class EntrenamientosLocales implements EntrenamientosRepository {
     final decodificado = jsonDecode(crudo);
 
     if (decodificado is! List) {
-      throw const CampoInvalido('(raíz)', 'el archivo debe contener una lista', null);
+      throw const CampoInvalido(
+        '(raíz)',
+        'el archivo debe contener una lista',
+        null,
+      );
     }
 
     return _cache = decodificado
@@ -47,6 +51,8 @@ class EntrenamientosLocales implements EntrenamientosRepository {
   @override
   Future<List<SesionEjercicio>> obtenerPendientes() async {
     final todas = await obtenerTodos();
-    return todas.where((sesion) => sesion.sePuedeEditar).toList(growable: false);
+    return todas
+        .where((sesion) => sesion.sePuedeEditar)
+        .toList(growable: false);
   }
 }

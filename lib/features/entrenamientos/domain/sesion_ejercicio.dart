@@ -6,7 +6,7 @@ import 'package:mi_primer_app/features/entrenamientos/domain/serie.dart';
 part 'sesion_ejercicio.freezed.dart';
 
 /// Define una sesión de entrenamiento.
-@Freezed(fromJson: false,toJson: false)
+@Freezed(fromJson: false, toJson: false)
 abstract class SesionEjercicio with _$SesionEjercicio {
   const factory SesionEjercicio({
     required String id,
@@ -20,7 +20,8 @@ abstract class SesionEjercicio with _$SesionEjercicio {
 
   const SesionEjercicio._();
 
-  factory SesionEjercicio.fromJson(Map<String, dynamic> json) => SesionEjercicio(
+  factory SesionEjercicio.fromJson(Map<String, dynamic> json) =>
+      SesionEjercicio(
         id: leerTexto(json, 'id'),
         nombreEjercicio: leerTexto(json, 'nombreEjercicio'),
         musculoObjetivo: leerTexto(json, 'musculoObjetivo'),
@@ -31,14 +32,14 @@ abstract class SesionEjercicio with _$SesionEjercicio {
       );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'nombreEjercicio': nombreEjercicio,
-        'musculoObjetivo': musculoObjetivo,
-        'serieObjetivo': serieObjetivo.toJson(),
-        'creadoEn': creadoEn.toUtc().toIso8601String(),
-        'estado': estado.toJson(),
-        'notas': notas,
-      };
+    'id': id,
+    'nombreEjercicio': nombreEjercicio,
+    'musculoObjetivo': musculoObjetivo,
+    'serieObjetivo': serieObjetivo.toJson(),
+    'creadoEn': creadoEn.toUtc().toIso8601String(),
+    'estado': estado.toJson(),
+    'notas': notas,
+  };
 
   // ── Reglas de negocio ───────────────────────────────────────────────────
 
@@ -48,5 +49,6 @@ abstract class SesionEjercicio with _$SesionEjercicio {
 
   Duration antiguedad(DateTime ahora) => ahora.difference(creadoEn);
 
-  bool estaObsoleta(DateTime ahora) => antiguedad(ahora) > const Duration(days: 7);
+  bool estaObsoleta(DateTime ahora) =>
+      antiguedad(ahora) > const Duration(days: 7);
 }
